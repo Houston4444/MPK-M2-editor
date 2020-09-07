@@ -333,8 +333,19 @@ class Akai_MPK_Mini(Ui_MainWindow):
     def show_autofill(self):
         self.autofill_window.show()
 
+def get_code_root():
+    return os.path.dirname(sys.argv[0])
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
+    
+    ### Translation process
+    locale = QLocale.system().name()
+    appTranslator = QtCore.QTranslator()
+    if appTranslator.load("%s%slocale%smpk_m2_editor_%s" % (getCodeRoot(),
+                                                            os.sep, os.sep, locale)):
+        app.installTranslator(appTranslator)
+    
     MainWindow = QtWidgets.QMainWindow()
     ui = Akai_MPK_Mini()
     ui.setupUi(MainWindow)
